@@ -26,4 +26,10 @@ Tools • Dart 2.12.0 (build 2.12.0-259.16.beta)
 
 ### Android Studioのインストール (Debug用のエミューレータ)
 
-### Gitのinstall
+### Gitからclone
+
+```bash
+$ git clone https://github.com/u9uru/omelet.git
+$ cd omelet
+$ flutter pub get
+```
