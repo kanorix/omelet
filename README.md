@@ -14,19 +14,22 @@ Engine • revision 042c82b02c
 Tools • Dart 2.12.0 (build 2.12.0-259.16.beta)
 ```
 
-### Flutterのinstall
+- Gitのinstall
 
-- [このリンク](https://flutter.dev/docs/get-started/install/windows)からダウンロード
-- 任意のフォルダに解凍
-  - 例えば、`c:\env`にフォルダを作成しその中で解凍する
-  - `c:\env\flutter\...`となる
-- 環境変数`path`に追加する
-  - 例の場合なら`c:\env\flutter\bin`
-- コマンド`flutter doctor`が実行できればOK
+- Flutterのinstall
 
-### Android Studioのインストール (Debug用のエミューレータ)
+  - [このリンク](https://flutter.dev/docs/get-started/install/windows)からダウンロード
+  - 任意のフォルダに解凍
+    - 例えば、`c:\env`にフォルダを作成しその中で解凍する
+    - `c:\env\flutter\...`となる
+  - 環境変数`path`に追加する
+    - 例の場合なら`c:\env\flutter\bin`
+  - コマンド`flutter doctor --android-licenses`が実行できればOK
 
-### Gitからclone
+- Android Studioのインストール (Debug用のエミューレータ)
+  - [このリンク](https://developer.android.com/studio?hl=ja)からダウンロード
+
+- Gitからclone
 
 ```bash
 $ git clone https://github.com/u9uru/omelet.git
