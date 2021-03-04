@@ -8,10 +8,10 @@
 
 ```bash
 $ flutter --version
-Flutter 1.26.0-17.8.pre • channel beta • https://github.com/flutter/flutter.git
-Framework • revision 044f2cf560 (6 days ago) • 2021-02-24 13:02:05 -0800
-Engine • revision 042c82b02c
-Tools • Dart 2.12.0 (build 2.12.0-259.16.beta)
+Flutter 2.0.0 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 60bd88df91 (22 hours ago) • 2021-03-03 09:13:17 -0800
+Engine • revision 40441def69
+Tools • Dart 2.12.0
 ```
 
 - Gitのinstall
