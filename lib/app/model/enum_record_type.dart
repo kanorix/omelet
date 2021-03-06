@@ -13,12 +13,12 @@ extension RecordTypeEx on RecordType {
 
   String get name => this.toString().split('.').last;
 
-  int get id => _getField(0);
+  int get id => _getField<int>(0);
 
   RecordType valueOf(String name) =>
       RecordType.values.firstWhere((e) => e.name == name);
 
-  dynamic _getField(int fieldId) {
+  T _getField<T>(int fieldId) {
     return _fieldMap[this][fieldId];
   }
 }
