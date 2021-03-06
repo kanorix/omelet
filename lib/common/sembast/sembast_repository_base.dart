@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:get_it/get_it.dart';
 import 'package:omelet/app/config/export/common.dart';
 import 'package:omelet/common/base/repository_base.dart';
@@ -45,6 +46,7 @@ class SembastRepositoryBase<E extends ModelBase> extends RepositoryBase<E> {
   /// 変更
   @override
   Future<void> update(E entity) async {
+    entity.updatedAt = GetIt.I<Clock>().now();
     await _database.transaction((txn) async {
       await getEntity(entity).update(txn, entity.toMap());
     });

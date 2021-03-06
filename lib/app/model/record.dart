@@ -22,7 +22,7 @@ class Record extends ModelBase {
   @override
   Record.fromMap(
     Map<String, Object> map, {
-    RecordItem Function() recordItemGenerator,
+    RecordItem Function(dynamic) recordItemGenerator,
   })  : this.templateId = map[RecordField.templateId],
         this.title = map[RecordField.title],
         this.items = (map[RecordField.items] as List)
