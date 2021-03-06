@@ -3,19 +3,16 @@ import 'package:omelet/app/config/export/model.dart';
 import 'package:omelet/app/config/export/repository.dart';
 
 class RecordListNotifier extends ChangeNotifier {
-  // context
-  final BuildContext _ctx;
-
   // レコード
   Future<List<Record>> _records;
 
-  RecordListNotifier(this._ctx) {
+  RecordListNotifier() {
     _loadRecords();
   }
 
   Future<List<Record>> get records => _records;
 
-  RecordRepository get recordRepository => _ctx.read<RecordRepositorySembast>();
+  RecordRepository get recordRepository => GetIt.I<RecordRepository>();
 
   void _loadRecords() async {
     _records = recordRepository.findAll();

@@ -1,5 +1,7 @@
-import 'package:omelet/common/util/date_util.dart';
+import 'package:clock/clock.dart';
+import 'package:get_it/get_it.dart';
 import 'package:uuid/uuid.dart';
+import 'package:omelet/common/util/date_util.dart';
 
 class ModelBaseField {
   static const id = 'id';
@@ -10,10 +12,10 @@ class ModelBaseField {
 
 abstract class ModelBase {
   /// ID
-  final String id;
+  final String _id;
 
   /// 作成日時
-  final DateTime createdAt;
+  final DateTime _createdAt;
 
   /// 更新日時
   DateTime updatedAt;
@@ -21,18 +23,22 @@ abstract class ModelBase {
   /// 削除フラグ
   bool deleteFlg;
 
+  String get id => _id;
+
+  DateTime get createdAt => _createdAt;
+
   ModelBase({
     DateTime updatedAt,
     bool deleteFlg,
-  })  : this.id = Uuid().v4(),
-        this.createdAt = DateTime.now(),
-        this.updatedAt = updatedAt ?? DateTime.now(),
+  })  : this._id = GetIt.I<Uuid>().v4(),
+        this._createdAt = GetIt.I<Clock>().now(),
+        this.updatedAt = updatedAt ?? GetIt.I<Clock>().now(),
         this.deleteFlg = deleteFlg ?? false;
 
   /// マップからEntityに変換します。
   ModelBase.fromMap(Map<String, Object> map)
-      : this.id = map[ModelBaseField.id],
-        this.createdAt = DateUtil.parseIso(map[ModelBaseField.createdAt]),
+      : this._id = map[ModelBaseField.id],
+        this._createdAt = DateUtil.parseIso(map[ModelBaseField.createdAt]),
         this.updatedAt = DateUtil.parseIso(map[ModelBaseField.updatedAt]),
         this.deleteFlg = map[ModelBaseField.deleteFlg];
 
@@ -40,8 +46,8 @@ abstract class ModelBase {
   /// 呼び出し時に [updatedAt] が更新される
   Map<String, Object> toMap() {
     return {
-      ModelBaseField.id: this.id,
-      ModelBaseField.createdAt: DateUtil.toIsoString(this.createdAt),
+      ModelBaseField.id: this._id,
+      ModelBaseField.createdAt: DateUtil.toIsoString(this._createdAt),
       ModelBaseField.updatedAt: DateUtil.updatedAt,
       ModelBaseField.deleteFlg: this.deleteFlg ?? false,
     };

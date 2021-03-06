@@ -11,7 +11,7 @@ class RecordPage extends StatelessWidget {
       providers: [
         // Notifier
         ChangeNotifierProvider<RecordListNotifier>(
-          create: (ctx) => RecordListNotifier(ctx),
+          create: (_) => RecordListNotifier(),
         ),
       ],
       child: RecordListView(),
