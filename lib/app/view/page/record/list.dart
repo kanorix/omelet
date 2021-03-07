@@ -47,12 +47,6 @@ class RecordListView extends StatelessWidget {
               event.addRecord();
             },
           ),
-          IconButton(
-            icon: Icon(Icons.remove),
-            onPressed: () {
-              event.removeRecord();
-            },
-          )
         ],
       ),
       body: FutureBuilder(

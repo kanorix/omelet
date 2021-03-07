@@ -11,5 +11,6 @@
         "editor.suggestSelection": "first",
         "editor.tabCompletion": "onlySnippets",
         "editor.wordBasedSuggestions": false
-    }
+    },
+    "files.autoGuessEncoding": true
 }
