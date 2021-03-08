@@ -1,53 +1,63 @@
 import 'package:omelet/app/config/export/default.dart';
+import 'package:omelet/app/config/export/notifier.dart';
+
+const _searchFormPadding = EdgeInsets.symmetric(
+  horizontal: 20,
+  vertical: 12,
+);
+
+const _searchFormBorder = OutlineInputBorder(
+  borderSide: const BorderSide(
+    width: 0,
+    style: BorderStyle.none,
+  ),
+  borderRadius: const BorderRadius.all(
+    const Radius.circular(kToolbarHeight),
+  ),
+);
 
 class SearchAppBar extends StatelessWidget with PreferredSizeWidget {
-  static const _searchFormPadding = EdgeInsets.symmetric(
-    horizontal: 20,
-    vertical: 12,
-  );
-
-  static const _searchFormBorder = OutlineInputBorder(
-    borderSide: const BorderSide(
-      width: 0,
-      style: BorderStyle.none,
-    ),
-    borderRadius: const BorderRadius.all(
-      const Radius.circular(kToolbarHeight),
-    ),
-  );
-
-  final bool searchMode;
+  // タイトル
   final String titleText;
-  final onTapSearchIcon;
-  final onTapCloseIcon;
+
+  // 検索欄が変化したときのイベント
+  final void Function(String) onChanged;
+
+  // 検索欄が開いた時のイベント
+  final void Function() onSearchOpened;
+
+  // 検索欄が閉じたときのイベント
+  final void Function() onSearchClosed;
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
-  const SearchAppBar(
-      {Key key,
-      @required this.searchMode,
-      @required this.titleText,
-      @required this.onTapSearchIcon,
-      @required this.onTapCloseIcon})
-      : super(key: key);
+  const SearchAppBar({
+    @required this.titleText,
+    @required this.onChanged,
+    Key key,
+    this.onSearchOpened,
+    this.onSearchClosed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final event = context.read<ApplicationNotifier>();
+
     return AnimatedSwitcher(
-      // animationさせたいウィジェットをラップする
       duration: Duration(milliseconds: 280),
-      child: searchMode
+      child: context.watch<ApplicationNotifier>().searchMode
           ? AppBar(
               key: ValueKey(1),
               foregroundColor: Colors.grey,
               backgroundColor: Colors.black,
               title: Container(
                 child: TextField(
-                  // onChanged: (v) {
-                  //   print(v);
-                  // },
-                  // onEditingComplete: () => print('s'),
+                  onChanged: onChanged,
+                  onEditingComplete: () {
+                    (onSearchClosed ?? () {})();
+                    event.toggleSearchMode();
+                  },
                   autofocus: true,
                   cursorColor: Colors.grey,
                   decoration: InputDecoration(
@@ -63,7 +73,10 @@ class SearchAppBar extends StatelessWidget with PreferredSizeWidget {
               actions: [
                 IconButton(
                   icon: Icon(Icons.close),
-                  onPressed: onTapCloseIcon,
+                  onPressed: () {
+                    (onSearchClosed ?? () {})();
+                    event.toggleSearchMode();
+                  },
                 ),
               ],
             )
@@ -73,7 +86,10 @@ class SearchAppBar extends StatelessWidget with PreferredSizeWidget {
               actions: [
                 IconButton(
                   icon: Icon(Icons.search),
-                  onPressed: onTapSearchIcon,
+                  onPressed: () {
+                    (onSearchOpened ?? () {})();
+                    event.toggleSearchMode();
+                  },
                 ),
               ],
             ),

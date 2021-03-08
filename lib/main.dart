@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:omelet/app/config/export/notifier.dart';
 import 'package:omelet/app/config/export/repository.dart';
 
 import 'app/config/export/default.dart';
@@ -15,7 +16,9 @@ class MyApp extends StatelessWidget {
   build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // リポジトリ
+        ChangeNotifierProvider<ApplicationNotifier>(
+          create: (_) => ApplicationNotifier(),
+        ),
         Provider(create: (_) => RecordRepositorySembast()),
       ],
       child: MaterialApp(
