@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:omelet/app/config/export/default.dart';
 import 'package:omelet/app/config/export/model.dart';
 import 'package:omelet/app/config/export/repository.dart';
@@ -6,8 +8,11 @@ class RecordListNotifier extends ChangeNotifier {
   // context
   final BuildContext _ctx;
 
-  // レコード
+  // 表示するレコード
   Future<List<Record>> _records;
+
+  // 全件レコード
+  Future<List<Record>> _simpleRecords;
 
   RecordListNotifier(this._ctx) {
     _loadRecords();
@@ -18,12 +23,20 @@ class RecordListNotifier extends ChangeNotifier {
   RecordRepository get recordRepository => _ctx.read<RecordRepositorySembast>();
 
   void _loadRecords() async {
-    _records = recordRepository.findAll();
+    _simpleRecords = recordRepository.findAll();
+    _records = _simpleRecords;
     notifyListeners();
   }
 
-  void addRecord() async {
-    await recordRepository.insert(Record(title: "title"));
+  void search(String query) async {
+    _records = _simpleRecords.then((value) {
+      return value.where((element) => element.title.contains(query)).toList();
+    });
+    notifyListeners();
+  }
+
+  void addRecord({String title = 'no-title'}) async {
+    await recordRepository.insert(Record(title: title));
     _loadRecords();
   }
 
