@@ -74,7 +74,7 @@ void main() {
     };
 
     final helper = MockDateTimeHelper();
-    final recordItem = RecordItem();
+    final recordItem = MockRecordItem();
     final RecordItem Function(dynamic) generator = (e) => recordItem;
 
     // mock化
