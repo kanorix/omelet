@@ -49,8 +49,6 @@ class SearchAppBar extends StatelessWidget with PreferredSizeWidget {
       child: context.watch<ApplicationNotifier>().searchMode
           ? AppBar(
               key: ValueKey(1),
-              foregroundColor: Colors.grey,
-              backgroundColor: Colors.black,
               title: Container(
                 child: TextField(
                   onChanged: onChanged,
@@ -59,14 +57,15 @@ class SearchAppBar extends StatelessWidget with PreferredSizeWidget {
                     event.toggleSearchMode();
                   },
                   autofocus: true,
-                  cursorColor: Colors.grey,
+                  cursorColor:
+                      Theme.of(context).accentTextTheme.headline1.color,
                   decoration: InputDecoration(
                     hintText: 'search',
                     border: _searchFormBorder,
                     isDense: true,
                     contentPadding: _searchFormPadding,
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Theme.of(context).focusColor,
                   ),
                 ),
               ),

@@ -24,7 +24,7 @@ class RecordListNotifier extends ChangeNotifier {
 
   void search(String query) async {
     _records = _cache.then((value) {
-      return value.where((element) => element.title.contains(query)).toList();
+      return value.where((e) => e.title.contains(query)).toList();
     });
     notifyListeners();
   }
@@ -34,8 +34,14 @@ class RecordListNotifier extends ChangeNotifier {
     _loadRecords();
   }
 
-  void removeRecord() async {
-    await recordRepository.destroy();
-    _loadRecords();
+  Future<void> removeRecord(Record record) async {
+    // 表示の関係でキャッシュのリストを削除する
+    _records = _cache.then((v) {
+      v.removeWhere((e) => e.id == record.id);
+      return v;
+    });
+    notifyListeners();
+    await recordRepository.delete(record);
+    await recordRepository.eliminate();
   }
 }

@@ -59,7 +59,7 @@ class SembastRepositoryBase<E extends ModelBase> extends RepositoryBase<E> {
     update(entity);
   }
 
-  /// 完全削除
+  /// 完全削除(削除フラグがtrueのみ)
   @override
   Future<void> eliminate() async {
     final finder = Finder(
