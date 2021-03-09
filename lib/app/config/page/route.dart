@@ -17,7 +17,6 @@ class PageRouter {
 
   /// Create and return routes map.
   static final Map<String, Widget> _routes = {
-    home: FrameListPage(),
     // 枠 関連
     frameList: FrameListPage(),
     frameCreate: FrameCreatePage(),
