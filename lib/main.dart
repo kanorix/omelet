@@ -36,7 +36,6 @@ class MyApp extends StatelessWidget {
                 Theme.of(context).textTheme,
               ),
             ),
-
             routes: PageRouter.routes,
           );
         },

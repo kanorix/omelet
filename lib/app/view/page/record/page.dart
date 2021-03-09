@@ -3,7 +3,7 @@ import 'package:omelet/app/notifier/record/record_list_notifier.dart';
 import 'package:omelet/app/view/page/record/list.dart';
 
 class RecordPage extends StatelessWidget {
-  RecordPage({Key key}) : super(key: key);
+  const RecordPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
