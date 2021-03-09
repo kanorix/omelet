@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:omelet/app/view/page/record/page.dart';
+import 'package:omelet/app/view/page/record/template/page.dart';
 
 class PageRouter {
   static const String home = '/';
@@ -13,7 +14,7 @@ class PageRouter {
 
   /// Create and return routes map.
   static final Map<String, Widget> _routes = {
-    home: RecordPage(),
+    home: TemplatePage(),
     record: RecordPage(),
     // recordList: RecordPage(),
     // recordCreate: RecordCreatePage(),
