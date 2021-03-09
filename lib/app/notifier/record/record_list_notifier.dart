@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:omelet/app/config/export/default.dart';
 import 'package:omelet/app/config/export/model.dart';
 import 'package:omelet/app/config/export/repository.dart';
