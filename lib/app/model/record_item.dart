@@ -17,8 +17,8 @@ class RecordItem {
 
   Map<String, Object> toMap() {
     return {
-      RecordItemField.type: this.type.name,
-      RecordItemField.content: this.content,
+      RecordItemField.type: type.name,
+      RecordItemField.content: content,
     };
   }
 }

@@ -3,9 +3,6 @@ import 'package:omelet/app/config/export/model.dart';
 import 'package:omelet/app/config/export/repository.dart';
 
 class RecordListNotifier extends ChangeNotifier {
-  // context
-  final BuildContext _ctx;
-
   // 表示するレコード
   Future<List<Record>> _records;
 
@@ -14,9 +11,9 @@ class RecordListNotifier extends ChangeNotifier {
 
   Future<List<Record>> get records => _records;
 
-  RecordRepository get recordRepository => _ctx.read<RecordRepositorySembast>();
+  RecordRepository get recordRepository => GetIt.I<RecordRepository>();
 
-  RecordListNotifier(this._ctx) {
+  RecordListNotifier() {
     _loadRecords();
   }
 

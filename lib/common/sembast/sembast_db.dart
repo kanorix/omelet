@@ -3,34 +3,25 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'package:sembast/sembast_memory.dart';
 import 'package:sembast_web/sembast_web.dart';
 
 class SembastDataBase {
   static const String name = 'omelet.db';
-  static SembastDataBase _instance;
   static Database _database;
 
-  factory SembastDataBase() => _instance ??= SembastDataBase._internal();
-
-  // 内部コンストラクタ
-  SembastDataBase._internal();
-
-  Future<Database> _initSembast() async {
-    // webの場合
-    if (kIsWeb) {
-      return await databaseFactoryWeb.openDatabase(name);
+  Future<Database> _openDataBase({bool useMemory = false}) async {
+    if (useMemory) {
+      return databaseFactoryMemory.openDatabase(name);
+    } else if (kIsWeb) {
+      return databaseFactoryWeb.openDatabase(name);
+    } else {
+      final dir = await getApplicationDocumentsDirectory();
+      return databaseFactoryIo.openDatabase(join(dir.path, name));
     }
-
-    // 以外の場合
-    final applicationDocumentDir = await getApplicationDocumentsDirectory();
-    final path = join(applicationDocumentDir.path, name);
-
-    return await databaseFactoryIo.openDatabase(path);
   }
 
   /// DBを取得します。
-  Future<Database> getDataBase() async {
-    _database ??= await _initSembast();
-    return _database;
-  }
+  Future<Database> getDataBase({useMemory = false}) async =>
+      _database ??= await _openDataBase(useMemory: useMemory);
 }
