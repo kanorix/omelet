@@ -6,24 +6,34 @@ class RecordListNotifier extends ChangeNotifier {
   // context
   final BuildContext _ctx;
 
-  // レコード
+  // 表示するレコード
   Future<List<Record>> _records;
 
-  RecordListNotifier(this._ctx) {
-    _loadRecords();
-  }
+  // レコードのキャッシュ
+  Future<List<Record>> _cache;
 
   Future<List<Record>> get records => _records;
 
   RecordRepository get recordRepository => _ctx.read<RecordRepositorySembast>();
 
+  RecordListNotifier(this._ctx) {
+    _loadRecords();
+  }
+
   void _loadRecords() async {
-    _records = recordRepository.findAll();
+    _records = _cache = recordRepository.findAll();
     notifyListeners();
   }
 
-  void addRecord() async {
-    await recordRepository.insert(Record(title: "title"));
+  void search(String query) async {
+    _records = _cache.then((value) {
+      return value.where((element) => element.title.contains(query)).toList();
+    });
+    notifyListeners();
+  }
+
+  void addRecord({String title = 'no-title'}) async {
+    await recordRepository.insert(Record(title: title));
     _loadRecords();
   }
 
