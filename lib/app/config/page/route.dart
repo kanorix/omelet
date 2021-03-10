@@ -8,18 +8,18 @@ class PageRouter {
   static const String recordList = '/record/list';
   static const String recordCreate = '/record/create';
 
-  // static const String frame = '/frame';
-  static const String frameList = '/frame/list';
-  static const String frameCreate = '/frame/create';
+  // static const String template = '/template';
+  static const String templateList = '/template/list';
+  static const String templateCreate = '/template/create';
 
   static Map<String, WidgetBuilder> get routes =>
       _routes.map((key, value) => MapEntry(key, (_) => value));
 
   /// Create and return routes map.
   static final Map<String, Widget> _routes = {
-    // 枠 関連
-    frameList: FrameListPage(),
-    frameCreate: FrameCreatePage(),
+    // テンプレート 関連
+    templateList: TemplateListPage(),
+    templateCreate: TemplateCreatePage(),
     // レコード 関連
     recordList: RecordListPage(),
     recordCreate: RecordCreatePage(),

@@ -1,20 +1,20 @@
 import 'package:omelet/app/config/export/default.dart';
 import 'package:omelet/app/notifier/record/record_list_notifier.dart';
 
-class FrameListPage extends StatelessWidget {
-  const FrameListPage({Key key}) : super(key: key);
+class TemplateListPage extends StatelessWidget {
+  const TemplateListPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RecordListNotifier>(
       create: (_) => RecordListNotifier(),
-      child: FrameListView(),
+      child: TemplateListView(),
     );
   }
 }
 
-class FrameListView extends StatelessWidget {
-  const FrameListView({Key key}) : super(key: key);
+class TemplateListView extends StatelessWidget {
+  const TemplateListView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class FrameListView extends StatelessWidget {
         child: Icon(Icons.add),
         onPressed: () {
           PageNavigator.of(context).pushNamed(
-            PageRouter.frameCreate,
+            PageRouter.templateCreate,
           );
         },
       ),
