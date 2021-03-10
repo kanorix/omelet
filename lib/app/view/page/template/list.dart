@@ -35,21 +35,26 @@ class TemplateListView extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       // レコードのリスト
       body: Scrollbar(
-        child: ListView.builder(
-          itemCount: 5,
-          itemBuilder: (_, int index) {
-            return Card(
-              child: ListTile(
-                title: Text('frame-name'),
-                subtitle: Text('2021/03/07'),
-                onTap: () {
-                  PageNavigator.of(context).pushNamed(
-                    PageRouter.recordList,
-                  );
-                },
-              ),
-            );
-          },
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: ListView.builder(
+            itemCount: 5,
+            itemBuilder: (_, int index) {
+              return Card(
+                child: ListTile(
+                  title: Text('frame-name'),
+                  subtitle: Text('2021/03/07'),
+                  trailing:
+                      Text('10', style: TextStyle(color: Colors.deepOrange)),
+                  onTap: () {
+                    PageNavigator.of(context).pushNamed(
+                      PageRouter.recordList,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
