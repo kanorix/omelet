@@ -21,7 +21,7 @@ class FrameCreateView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Frame作成'),
+        title: Text('Template作成'),
       ),
       // 追加ボタン
       floatingActionButton: FloatingActionButton(
@@ -30,70 +30,70 @@ class FrameCreateView extends StatelessWidget {
       ),
       // 追加ボタンの位置指定
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(8),
-            child: TextFormField(
-              maxLength: 20,
-              decoration: InputDecoration(
-                labelText: 'テンプレート名',
-                border: OutlineInputBorder(),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(8),
+              child: TextFormField(
+                maxLength: 20,
+                decoration: InputDecoration(
+                  labelText: 'テンプレート名',
+                  border: OutlineInputBorder(),
+                ),
               ),
             ),
-          ),
-          Card(
-            child: Container(
+            AnimatedList(
+                shrinkWrap: true,
+                initialItemCount: 0,
+                itemBuilder: (_, int index, __) {
+                  return Dismissible(
+                      key: UniqueKey(),
+                      child: Card(
+                        elevation: 6,
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                maxLength: 20,
+                                decoration: InputDecoration(labelText: '表示名'),
+                              ),
+                              DropdownButtonFormField<RecordType>(
+                                decoration:
+                                    InputDecoration(labelText: 'レコードタイプ'),
+                                icon: Icon(Icons.arrow_downward),
+                                iconSize: 20,
+                                value: RecordType.TEXT,
+                                onChanged: (v) {},
+                                items: RecordType.values
+                                    .where((e) => e != RecordType.NONE)
+                                    .map<DropdownMenuItem<RecordType>>(
+                                        (RecordType type) {
+                                  return DropdownMenuItem<RecordType>(
+                                    value: type,
+                                    child: Text(type.name),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ));
+                }),
+            Container(
               padding: EdgeInsets.all(10),
-              child: Column(children: [
-                TextFormField(
-                  maxLength: 20,
-                  decoration: InputDecoration(
-                    labelText: '内容1',
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFF6200EE)),
-                    ),
-                  ),
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    // Respond to button press
-                  },
-                  child: Text("DATE"),
-                ),
-              ]),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Respond to button press
+                },
+                icon: Icon(Icons.add, size: 18),
+                label: Text("追加"),
+              ),
             ),
-          ),
-          Card(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(children: [
-                TextFormField(
-                  maxLength: 20,
-                  decoration: InputDecoration(
-                    labelText: '内容2',
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFF6200EE)),
-                    ),
-                  ),
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    // Respond to button press
-                  },
-                  child: Text("DATE"),
-                ),
-              ]),
-            ),
-          ),
-          ElevatedButton.icon(
-            onPressed: () {
-              // Respond to button press
-            },
-            icon: Icon(Icons.add, size: 18),
-            label: Text("追加"),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
