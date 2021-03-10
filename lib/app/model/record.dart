@@ -20,11 +20,14 @@ class Record extends ModelBase {
   }) : super();
 
   @override
-  Record.fromMap(Map<String, Object> map)
-      : this.templateId = map[RecordField.templateId],
+  Record.fromMap(
+    Map<String, Object> map, {
+    RecordItem Function(dynamic) recordItemGenerator,
+  })  : this.templateId = map[RecordField.templateId],
         this.title = map[RecordField.title],
         this.items = (map[RecordField.items] as List)
-            .map((e) => RecordItem.fromMap(e))
+            .map<RecordItem>(
+                recordItemGenerator ?? (e) => RecordItem.fromMap(e))
             .toList(),
         super.fromMap(map);
 
