@@ -38,14 +38,13 @@ class TemplateListView extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(10),
           child: ListView.builder(
-            itemCount: 5,
+            itemCount: 1,
             itemBuilder: (_, int index) {
               return Card(
                 child: ListTile(
-                  title: Text('frame-name'),
+                  title: Text('本の感想'),
                   subtitle: Text('2021/03/07'),
-                  trailing:
-                      Text('10', style: TextStyle(color: Colors.deepOrange)),
+                  trailing: Text('10'),
                   onTap: () {
                     PageNavigator.of(context).pushNamed(
                       PageRouter.recordList,
