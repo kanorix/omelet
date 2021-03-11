@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             // テーマはシステム設定に従う
             themeMode: ThemeMode.system,
             // ルートの設定
-            initialRoute: '/frame/list',
+            initialRoute: PageRouter.templateList,
             routes: PageRouter.routes,
           );
         },
