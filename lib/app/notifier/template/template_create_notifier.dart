@@ -26,6 +26,10 @@ class TemplateCreateNotifier extends ChangeNotifier with ValidatorMixin {
     notifyListeners();
   }
 
+  void updateTitle(String title) {
+    _template.title = title;
+  }
+
   void updateItemType(int index, RecordType type) {
     _template.items[index].type = type;
   }
