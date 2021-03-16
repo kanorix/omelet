@@ -34,4 +34,7 @@ class Template extends ModelBase {
       ...super.toMap(),
     };
   }
+
+  @override
+  String toString() => toMap().toString();
 }
