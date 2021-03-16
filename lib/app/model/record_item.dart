@@ -6,8 +6,8 @@ class RecordItemField {
 }
 
 class RecordItem {
-  final RecordType type;
-  final String content;
+  RecordType type;
+  String content;
 
   RecordItem({this.type = RecordType.TEXT, this.content = ''});
 

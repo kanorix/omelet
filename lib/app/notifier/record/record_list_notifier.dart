@@ -22,16 +22,15 @@ class RecordListNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void search(String query) async {
-    _records = _cache.then((value) {
-      return value.where((e) => e.title.contains(query)).toList();
-    });
-    notifyListeners();
+  void reload() async {
+    _loadRecords();
   }
 
-  void addRecord({String title = 'no-title'}) async {
-    await recordRepository.insert(Record(title: title));
-    _loadRecords();
+  void search(String query) async {
+    _records = _cache.then((value) {
+      return value.where((e) => e.items.first.content.contains(query)).toList();
+    });
+    notifyListeners();
   }
 
   Future<void> removeRecord(Record record) async {
