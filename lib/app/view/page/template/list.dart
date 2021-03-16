@@ -42,7 +42,7 @@ class TemplateListView extends StatelessWidget {
         // レコードのリスト
         body: FutureListView<Template>(
           future: watch.templates,
-          itemBuilder: (Template template, int index) {
+          itemBuilder: (template, index, _) {
             return Card(
               child: ListTile(
                 title: Text(template.title),

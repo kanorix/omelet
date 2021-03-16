@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:omelet/app/config/export/default.dart';
 import 'package:omelet/app/config/export/model.dart';
 import 'package:omelet/app/config/export/notifier.dart';
+import 'package:omelet/app/view/component/dismissible_card.dart';
+import 'package:omelet/app/view/component/future_list_view.dart';
 
 import 'package:omelet/app/view/component/search_app_bar.dart';
 
@@ -23,14 +25,16 @@ class RecordListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final event = context.read<RecordListNotifier>();
-    final state = context.watch<RecordListNotifier>();
+    final Template template =
+        PageNavigator.of(context).getArgument(orElse: Template(title: 'test'));
+    final read = context.read<RecordListNotifier>();
+    final watch = context.watch<RecordListNotifier>();
 
     return Scaffold(
       appBar: SearchAppBar(
-        titleText: 'メモ一覧',
-        onChanged: (v) => event.search(v),
-        onSearchClosed: () => event.search(''),
+        titleText: '「${template.title}」一覧',
+        onChanged: (v) => read.search(v),
+        onSearchClosed: () => read.search(''),
       ),
       // レコード追加ボタン
       floatingActionButton: FloatingActionButton(
@@ -39,50 +43,35 @@ class RecordListView extends StatelessWidget {
           // :TODO: 後で削除する
           await PageNavigator.of(context).pushNamed(
             PageRouter.recordCreate,
+            template,
           );
-          event.addRecord(title: Random().nextInt(100).toString());
+          read.addRecord(title: Random().nextInt(100).toString());
         },
       ),
       // 追加ボタンの位置指定
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       // レコードのリスト
-      body: Scrollbar(
-        child: FutureBuilder(
-          future: state.records,
-          builder: (_, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            }
+      body: FutureListView<Record>(
+        future: watch.records,
+        itemBuilder: (record, index, list) {
+          return DismissibleCard(
+            padding: EdgeInsets.zero,
+            child: ListTile(
+              title: Text(record.title),
+              subtitle: Text('2021/03/07'),
+            ),
+            onDismissed: (direction) async {
+              list.removeAt(index);
+              await read.removeRecord(record);
 
-            final results = (snapshot.data as List<Record>);
-            return ListView.builder(
-              itemCount: results.length,
-              itemBuilder: (_, int index) {
-                final record = results[index];
-                return Card(
-                  child: Dismissible(
-                    key: UniqueKey(),
-                    background: Container(color: Colors.red),
-                    onDismissed: (direction) async {
-                      results.removeAt(index);
-                      await event.removeRecord(record);
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("タイトル: ${record.title}は削除されました。"),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      title: Text(record.title),
-                      subtitle: Text('2021/03/07'),
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-        ),
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("タイトル: ${record.title}は削除されました。"),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
