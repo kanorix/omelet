@@ -2,6 +2,7 @@ enum RecordType {
   NONE,
   TEXT,
   DATE,
+  NUM,
 }
 
 extension RecordTypeEx on RecordType {
@@ -9,6 +10,7 @@ extension RecordTypeEx on RecordType {
     RecordType.NONE: [0],
     RecordType.TEXT: [1],
     RecordType.DATE: [2],
+    RecordType.NUM: [3],
   };
 
   String get name => this.toString().split('.').last;

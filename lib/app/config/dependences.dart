@@ -25,4 +25,9 @@ void registerDependences() {
     () => RecordRepositorySembast(),
     dependsOn: [Database],
   );
+
+  GetIt.I.registerSingletonWithDependencies<TemplateRepository>(
+    () => TemplateRepositorySembast(),
+    dependsOn: [Database],
+  );
 }
