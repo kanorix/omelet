@@ -40,12 +40,11 @@ class RecordListView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {
-          // :TODO: 後で削除する
           await PageNavigator.of(context).pushNamed(
             PageRouter.recordCreate,
             template,
           );
-          read.addRecord(title: Random().nextInt(100).toString());
+          read.reload();
         },
       ),
       // 追加ボタンの位置指定
@@ -57,8 +56,8 @@ class RecordListView extends StatelessWidget {
           return DismissibleCard(
             padding: EdgeInsets.zero,
             child: ListTile(
-              title: Text(record.title),
-              subtitle: Text('2021/03/07'),
+              title: Text(record.items.first.content),
+              subtitle: Text(record.createdAt.toString()),
             ),
             onDismissed: (direction) async {
               list.removeAt(index);
@@ -66,7 +65,7 @@ class RecordListView extends StatelessWidget {
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text("タイトル: ${record.title}は削除されました。"),
+                  content: Text("${record.items.first.content}は削除されました。"),
                 ),
               );
             },
