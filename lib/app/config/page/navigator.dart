@@ -3,7 +3,7 @@ import 'package:omelet/app/config/export/default.dart';
 class PageNavigator {
   final BuildContext _context;
 
-  PageNavigator.of(this._context);
+  PageNavigator.of(BuildContext context) : this._context = context;
 
   void pop({Object result}) {
     Navigator.of(_context).pop(result);
@@ -20,7 +20,7 @@ class PageNavigator {
     );
   }
 
-  Object getArguments() {
-    return ModalRoute.of(_context).settings.arguments;
+  Object getArgument({Object orElse, Function orElseGet}) {
+    return ModalRoute.of(_context).settings.arguments ?? orElse ?? orElseGet();
   }
 }

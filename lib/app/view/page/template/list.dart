@@ -24,37 +24,39 @@ class TemplateListView extends StatelessWidget {
     final watch = context.watch<TemplateListNotifier>();
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text('NOTE'),
-        ),
-        // 追加ボタン
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () async {
-            await PageNavigator.of(context).pushNamed(
-              PageRouter.templateCreate,
-            );
-            read.reload();
-          },
-        ),
-        // 追加ボタンの位置指定
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        // レコードのリスト
-        body: FutureListView<Template>(
-          future: watch.templates,
-          itemBuilder: (Template template, int index) {
-            return Card(
-              child: ListTile(
-                title: Text(template.title),
-                subtitle: Text(template.updatedAt.toString()),
-                trailing: Text('10'),
-                onTap: () {
-                  PageNavigator.of(context)
-                      .pushNamed(PageRouter.recordList, template);
-                },
-              ),
-            );
-          },
-        ));
+      appBar: AppBar(
+        title: Text('NOTE'),
+      ),
+      // 追加ボタン
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () async {
+          await PageNavigator.of(context).pushNamed(
+            PageRouter.templateCreate,
+          );
+          read.reload();
+        },
+      ),
+      // 追加ボタンの位置指定
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // レコードのリスト
+      body: FutureListView<Template>(
+        future: watch.templates,
+        itemBuilder: (template, index, _) {
+          return Card(
+            elevation: 6,
+            child: ListTile(
+              title: Text(template.title),
+              subtitle: Text(template.updatedAt.toString()),
+              trailing: Text('10'),
+              onTap: () {
+                PageNavigator.of(context)
+                    .pushNamed(PageRouter.recordList, template);
+              },
+            ),
+          );
+        },
+      ),
+    );
   }
 }
