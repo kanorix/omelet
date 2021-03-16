@@ -13,10 +13,10 @@ class PageNavigator {
     Navigator.of(_context).popUntil(ModalRoute.withName(routeName));
   }
 
-  Future<void> pushNamed(String routeName, {Object arguments}) {
+  Future<void> pushNamed(String routeName, [Object argument]) {
     return Navigator.of(_context).pushNamed(
       routeName,
-      arguments: arguments,
+      arguments: argument,
     );
   }
 

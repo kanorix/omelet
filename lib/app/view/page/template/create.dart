@@ -1,6 +1,6 @@
 import 'package:omelet/app/config/export/default.dart';
 import 'package:omelet/app/config/export/model.dart';
-import 'package:omelet/app/notifier/template/template_create_notifier.dart';
+import 'package:omelet/app/config/export/notifier.dart';
 import 'package:omelet/app/view/component/dismissible_card.dart';
 import 'package:omelet/app/view/component/future_modal.dart';
 import 'package:omelet/common/func/validator.dart';
@@ -22,8 +22,8 @@ class TemplateCreateView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final event = context.read<TemplateCreateNotifier>();
-    final state = context.watch<TemplateCreateNotifier>();
+    final read = context.read<TemplateCreateNotifier>();
+    final watch = context.watch<TemplateCreateNotifier>();
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +34,7 @@ class TemplateCreateView extends StatelessWidget {
         onPressed: () {
           futureModal(
             context: context,
-            future: event.save(),
+            future: read.save(),
             child: Text('Saving...'),
           ).then((result) {
             if (result) PageNavigator.of(context).pop();
@@ -46,12 +46,15 @@ class TemplateCreateView extends StatelessWidget {
         child: SingleChildScrollView(
           padding: EdgeInsets.all(10),
           child: Form(
-            key: event.formKey,
+            key: read.formKey,
             child: Column(
               children: [
                 Container(
                   padding: EdgeInsets.all(8),
                   child: TextFormField(
+                    onChanged: (v) {
+                      read.updateTitle(v);
+                    },
                     validator: emptyValidator,
                     maxLength: 20,
                     decoration: InputDecoration(
@@ -63,13 +66,13 @@ class TemplateCreateView extends StatelessWidget {
                 ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: state.items.length,
+                  itemCount: watch.items.length,
                   itemBuilder: (_, int index) {
                     return DismissibleCard(
                       // 最後の一つは消せないようにする
-                      isDismissible: event.items.length != 1,
+                      isDismissible: read.items.length != 1,
                       onDismissed: (_) {
-                        event.removeItem(index);
+                        read.removeItem(index);
                       },
                       child: Column(
                         children: [
@@ -77,18 +80,18 @@ class TemplateCreateView extends StatelessWidget {
                             maxLength: 20,
                             validator: emptyValidator,
                             decoration: InputDecoration(labelText: '表示名'),
-                            initialValue: state.items[index].name,
+                            initialValue: watch.items[index].name,
                             onChanged: (v) {
-                              event.updateItemName(index, v);
+                              read.updateItemName(index, v);
                             },
                           ),
                           DropdownButtonFormField<RecordType>(
                             decoration: InputDecoration(labelText: 'レコードタイプ'),
                             icon: Icon(Icons.arrow_downward),
                             iconSize: 20,
-                            value: state.items[index].type,
+                            value: watch.items[index].type,
                             onChanged: (v) {
-                              event.updateItemType(index, v);
+                              read.updateItemType(index, v);
                             },
                             items: RecordType.values
                                 .where((e) => e != RecordType.NONE)
@@ -105,12 +108,12 @@ class TemplateCreateView extends StatelessWidget {
                     );
                   },
                 ),
-                if (state.items.length != 10)
+                if (watch.items.length != 10)
                   Container(
                     padding: EdgeInsets.all(10),
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        event.addItem();
+                        read.addItem();
                       },
                       icon: Icon(Icons.add, size: 18),
                       label: Text('追加'),
