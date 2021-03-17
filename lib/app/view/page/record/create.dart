@@ -48,27 +48,28 @@ class RecordCreateView extends StatelessWidget {
         child: SingleChildScrollView(
           padding: EdgeInsets.all(10),
           child: Form(
-            key: read.formKey,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: watch.items.length,
-              itemBuilder: (_, int index) {
-                return Card(
-                  child: TextFormField(
-                    maxLength: 20,
-                    validator: emptyValidator,
-                    decoration: InputDecoration(
-                        labelText: read.template.items[index].name),
-                    initialValue: watch.items[index].content,
-                    onChanged: (v) {
-                      read.updateItem(index, v);
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
+              key: read.formKey,
+              child: Card(
+                  child: Container(
+                padding: EdgeInsets.all(8),
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: watch.items.length,
+                  itemBuilder: (_, int index) {
+                    return TextFormField(
+                      maxLength: 20,
+                      validator: emptyValidator,
+                      decoration: InputDecoration(
+                          labelText: read.template.items[index].name),
+                      initialValue: watch.items[index].content,
+                      onChanged: (v) {
+                        read.updateItem(index, v);
+                      },
+                    );
+                  },
+                ),
+              ))),
         ),
       ),
     );
