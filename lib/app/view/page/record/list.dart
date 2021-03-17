@@ -58,6 +58,10 @@ class RecordListView extends StatelessWidget {
             child: ListTile(
               title: Text(record.items.first.content),
               subtitle: Text(record.createdAt.toString()),
+              onLongPress: () {
+                _showDialog(context, template, record);
+              },
+              onTap: () => print('tap !!!'),
             ),
             onDismissed: (direction) async {
               list.removeAt(index);
@@ -74,4 +78,35 @@ class RecordListView extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showDialog(context, Template template, Record record) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (_) {
+      return Dialog(
+        child: Container(
+          height: 200,
+          padding: EdgeInsets.all(10),
+          child: Scrollbar(
+            child: ListView.builder(
+              itemCount: template.items.length,
+              itemBuilder: (_, index) {
+                return TextFormField(
+                    initialValue: record.items[index].content,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: template.items[index].name,
+                    ));
+
+                // Text('[$index] ${template.items[index].name} : ${record.items[index].content}');
+              },
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }
