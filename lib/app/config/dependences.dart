@@ -1,6 +1,7 @@
 import 'package:clock/clock.dart';
 import 'package:get_it/get_it.dart';
 import 'package:omelet/common/helper/date_time_helper.dart';
+import 'package:omelet/common/helper/string_helper.dart';
 import 'package:omelet/common/sembast/sembast_db.dart';
 import 'package:sembast/sembast.dart';
 import 'package:uuid/uuid.dart';
@@ -14,6 +15,7 @@ void registerDependences() {
 
   // Helper
   GetIt.I.registerSingleton<DateTimeHelper>(DateTimeHelper());
+  GetIt.I.registerSingleton<StringHelper>(StringHelper());
 
   // Database
   GetIt.I.registerSingletonAsync<Database>(

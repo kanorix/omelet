@@ -2,7 +2,6 @@ enum RecordType {
   None,
   Text,
   Date,
-  Time,
 }
 
 extension RecordTypeEx on RecordType {
@@ -10,7 +9,7 @@ extension RecordTypeEx on RecordType {
     RecordType.None: [0, ''],
     RecordType.Text: [1, '文字'],
     RecordType.Date: [2, '日付'],
-    RecordType.Time: [3, '時間'],
+    // RecordType.Time: [3, '時間'],
   };
 
   String get name => this.toString().split('.').last;

@@ -77,7 +77,7 @@ class TemplateCreateView extends StatelessWidget {
                       child: Column(
                         children: [
                           TextFormField(
-                            maxLength: 20,
+                            maxLength: 64,
                             validator: emptyValidator,
                             decoration: InputDecoration(labelText: '表示名'),
                             initialValue: watch.items[index].name,

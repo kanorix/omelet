@@ -21,6 +21,7 @@ dependencies:
 
   uuid: ^3.0.1
   clock: ^1.1.0
+  intl: ^0.17.0
 
   # Use responsive design.
   # https://pub.dev/packages/responsive_builder
