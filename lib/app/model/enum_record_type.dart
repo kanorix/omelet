@@ -1,16 +1,15 @@
 enum RecordType {
-  NONE,
-  TEXT,
-  DATE,
-  NUM,
+  None,
+  Text,
+  Date,
 }
 
 extension RecordTypeEx on RecordType {
   static const Map _fieldMap = {
-    RecordType.NONE: [0],
-    RecordType.TEXT: [1],
-    RecordType.DATE: [2],
-    RecordType.NUM: [3],
+    RecordType.None: [0, ''],
+    RecordType.Text: [1, '文字'],
+    RecordType.Date: [2, '日付'],
+    // RecordType.Time: [3, '時間'],
   };
 
   String get name => this.toString().split('.').last;
@@ -26,4 +25,4 @@ extension RecordTypeEx on RecordType {
 }
 
 // メソッドを使用するために定数として置いておく
-const RecordType recordType = RecordType.NONE;
+const RecordType recordType = RecordType.None;

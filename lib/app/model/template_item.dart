@@ -9,7 +9,7 @@ class TemplateItem {
   RecordType type;
   String name;
 
-  TemplateItem({this.type = RecordType.TEXT, this.name = ''});
+  TemplateItem({this.type = RecordType.Text, this.name = ''});
 
   TemplateItem.fromMap(Map<String, Object> map)
       : this.type = recordType.valueOf(map[TemplateItemField.type]),

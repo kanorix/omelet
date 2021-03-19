@@ -4,6 +4,9 @@ import 'package:omelet/app/config/export/repository.dart';
 
 class RecordListNotifier extends ChangeNotifier {
   // 表示するレコード
+  final Template template;
+
+  // 表示するレコード
   Future<List<Record>> _records;
 
   // レコードのキャッシュ
@@ -13,16 +16,16 @@ class RecordListNotifier extends ChangeNotifier {
 
   RecordRepository get recordRepository => GetIt.I<RecordRepository>();
 
-  RecordListNotifier() {
+  RecordListNotifier(this.template) {
     _loadRecords();
   }
 
-  void _loadRecords() async {
-    _records = _cache = recordRepository.findAll();
+  void _loadRecords() {
+    _records = _cache = recordRepository.findAllBy(templateId: template.id);
     notifyListeners();
   }
 
-  void reload() async {
+  void reload() {
     _loadRecords();
   }
 

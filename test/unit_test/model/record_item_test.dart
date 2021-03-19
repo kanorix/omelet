@@ -7,16 +7,16 @@ void main() {
     final item = RecordItem();
 
     // 値の検証
-    expect(item.type, equals(RecordType.TEXT));
+    expect(item.type, equals(RecordType.Text));
     expect(item.content, equals(''));
   });
 
   test('RecordItem 引数あり', () {
     // 実行
-    final item = RecordItem(type: RecordType.DATE, content: 'content');
+    final item = RecordItem(type: RecordType.Date, content: 'content');
 
     // 値の検証
-    expect(item.type, equals(RecordType.DATE));
+    expect(item.type, equals(RecordType.Date));
     expect(item.content, equals('content'));
   });
 
@@ -31,13 +31,13 @@ void main() {
     final item = RecordItem.fromMap(map);
 
     // 値の検証
-    expect(item.type, equals(RecordType.TEXT));
+    expect(item.type, equals(RecordType.Text));
     expect(item.content, equals('content'));
   });
 
   test('toMap', () {
     // データの準備
-    final item = RecordItem(type: RecordType.TEXT, content: 'content');
+    final item = RecordItem(type: RecordType.Text, content: 'content');
 
     final expected = {
       RecordItemField.type: 'TEXT',

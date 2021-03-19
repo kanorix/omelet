@@ -1,16 +1,17 @@
 import 'package:omelet/app/config/export/default.dart';
 import 'package:omelet/app/config/export/model.dart';
 import 'package:omelet/app/config/export/notifier.dart';
+import 'package:omelet/app/view/component/appropriate_form_field.dart';
 import 'package:omelet/app/view/component/future_modal.dart';
-import 'package:omelet/common/func/validator.dart';
+
+import 'package:omelet/common/mixin/helper_mixin.dart';
 
 class RecordCreatePage extends StatelessWidget {
   const RecordCreatePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Template template =
-        PageNavigator.of(context).getArgument(orElse: Template(title: 'test'));
+    final Template template = PageNavigator.of(context).getArgument();
 
     return ChangeNotifierProvider<RecordCreateNotifier>(
       create: (_) => RecordCreateNotifier(template: template),
@@ -19,8 +20,8 @@ class RecordCreatePage extends StatelessWidget {
   }
 }
 
-class RecordCreateView extends StatelessWidget {
-  const RecordCreateView({Key key}) : super(key: key);
+class RecordCreateView extends StatelessWidget with HelperMixin {
+  RecordCreateView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +58,9 @@ class RecordCreateView extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: watch.items.length,
                   itemBuilder: (_, int index) {
-                    return TextFormField(
-                      maxLength: 20,
-                      validator: emptyValidator,
-                      decoration: InputDecoration(
-                          labelText: read.template.items[index].name),
-                      initialValue: watch.items[index].content,
+                    return AppropriateFormField(
+                      read.template.items[index],
+                      watch.items[index],
                       onChanged: (v) {
                         read.updateItem(index, v);
                       },
