@@ -94,7 +94,7 @@ class TemplateCreateView extends StatelessWidget {
                               read.updateItemType(index, v);
                             },
                             items: RecordType.values
-                                .where((e) => e != RecordType.NONE)
+                                .where((e) => e != RecordType.None)
                                 .map<DropdownMenuItem<RecordType>>(
                                     (RecordType type) {
                               return DropdownMenuItem<RecordType>(

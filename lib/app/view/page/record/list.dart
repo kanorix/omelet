@@ -58,7 +58,6 @@ class RecordListView extends StatelessWidget {
               onLongPress: () {
                 _showDialog(context, read.template, record);
               },
-              onTap: () => print('tap !!!'),
             ),
             onDismissed: (direction) async {
               list.removeAt(index);

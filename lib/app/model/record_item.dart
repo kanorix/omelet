@@ -9,7 +9,7 @@ class RecordItem {
   RecordType type;
   String content;
 
-  RecordItem({this.type = RecordType.TEXT, this.content = ''});
+  RecordItem({this.type = RecordType.Text, this.content = ''});
 
   RecordItem.fromMap(Map<String, Object> map)
       : this.type = recordType.valueOf(map[RecordItemField.type]),
