@@ -9,8 +9,7 @@ class RecordCreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Template template =
-        PageNavigator.of(context).getArgument(orElse: Template(title: 'test'));
+    final Template template = PageNavigator.of(context).getArgument();
 
     return ChangeNotifierProvider<RecordCreateNotifier>(
       create: (_) => RecordCreateNotifier(template: template),

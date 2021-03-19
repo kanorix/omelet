@@ -30,6 +30,7 @@ Future<T> futureModal<T>({
 
   // futureが解決するまで待つ
   final result = await future;
+  // dialogを閉じる
   Navigator.pop(context);
 
   return result;

@@ -11,8 +11,10 @@ class RecordListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Template template = PageNavigator.of(context).getArgument();
+
     return ChangeNotifierProvider<RecordListNotifier>(
-      create: (_) => RecordListNotifier(),
+      create: (_) => RecordListNotifier(template),
       child: RecordListView(),
     );
   }
@@ -23,28 +25,25 @@ class RecordListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Template template =
-        PageNavigator.of(context).getArgument(orElse: Template(title: 'test'));
     final read = context.read<RecordListNotifier>();
     final watch = context.watch<RecordListNotifier>();
 
     return Scaffold(
       appBar: SearchAppBar(
-        titleText: '「${template.title}」一覧',
+        titleText: '「${read.template.title}」一覧',
         onChanged: (v) => read.search(v),
         onSearchClosed: () => read.search(''),
       ),
       // レコード追加ボタン
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () async {
-          await PageNavigator.of(context).pushNamed(
-            PageRouter.recordCreate,
-            template,
-          );
-          read.reload();
-        },
-      ),
+          child: Icon(Icons.add),
+          onPressed: () async {
+            await PageNavigator.of(context).pushNamed(
+              PageRouter.recordCreate,
+              read.template,
+            );
+            read.reload();
+          }),
       // 追加ボタンの位置指定
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       // レコードのリスト
@@ -57,7 +56,7 @@ class RecordListView extends StatelessWidget {
               title: Text(record.items.first.content),
               subtitle: Text(record.createdAt.toString()),
               onLongPress: () {
-                _showDialog(context, template, record);
+                _showDialog(context, read.template, record);
               },
               onTap: () => print('tap !!!'),
             ),

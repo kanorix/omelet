@@ -32,7 +32,7 @@ class RecordCreateNotifier extends ChangeNotifier with ValidatorMixin {
   Future<bool> save() async {
     if (hasError()) return false;
     // await Future.delayed(Duration(seconds: 1));
-    await recordRepository.insert(_record);
+    await recordRepository.insertWith(_record, template: template);
     print(_record);
     return true;
   }
