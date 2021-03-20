@@ -66,6 +66,7 @@ class TemplateCreateView extends StatelessWidget {
                   ),
                   ListView.builder(
                     scrollDirection: Axis.vertical,
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: watch.items.length,
                     itemBuilder: (_, int index) {

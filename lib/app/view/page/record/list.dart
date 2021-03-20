@@ -70,7 +70,8 @@ class RecordListView extends StatelessWidget with HelperMixin {
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text("${record.items.first.content}は削除されました。"),
+                  content: Text(
+                      "${stringHelper.limit(record.items.first.content)}は削除されました。"),
                 ),
               );
             },
