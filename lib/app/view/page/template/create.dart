@@ -42,84 +42,86 @@ class TemplateCreateView extends StatelessWidget {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      body: Scrollbar(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(10),
-          child: Form(
-            key: read.formKey,
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  child: TextFormField(
-                    onChanged: (v) {
-                      read.updateTitle(v);
-                    },
-                    validator: emptyValidator,
-                    maxLength: 20,
-                    decoration: InputDecoration(
-                      labelText: 'テンプレート名',
-                      border: OutlineInputBorder(),
+      body: SafeArea(
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(10),
+            child: Form(
+              key: read.formKey,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    child: TextFormField(
+                      onChanged: (v) {
+                        read.updateTitle(v);
+                      },
+                      validator: emptyValidator,
+                      maxLength: 20,
+                      decoration: InputDecoration(
+                        labelText: 'テンプレート名',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
-                ),
-                ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: watch.items.length,
-                  itemBuilder: (_, int index) {
-                    return DismissibleCard(
-                      // 最後の一つは消せないようにする
-                      isDismissible: read.items.length != 1,
-                      onDismissed: (_) {
-                        read.removeItem(index);
-                      },
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            maxLength: 64,
-                            validator: emptyValidator,
-                            decoration: InputDecoration(labelText: '表示名'),
-                            initialValue: watch.items[index].name,
-                            onChanged: (v) {
-                              read.updateItemName(index, v);
-                            },
-                          ),
-                          DropdownButtonFormField<RecordType>(
-                            decoration: InputDecoration(labelText: 'レコードタイプ'),
-                            icon: Icon(Icons.arrow_downward),
-                            iconSize: 20,
-                            value: watch.items[index].type,
-                            onChanged: (v) {
-                              read.updateItemType(index, v);
-                            },
-                            items: RecordType.values
-                                .where((e) => e != RecordType.None)
-                                .map<DropdownMenuItem<RecordType>>(
-                                    (RecordType type) {
-                              return DropdownMenuItem<RecordType>(
-                                value: type,
-                                child: Text(type.name),
-                              );
-                            }).toList(),
-                          ),
-                        ],
+                  ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: watch.items.length,
+                    itemBuilder: (_, int index) {
+                      return DismissibleCard(
+                        // 最後の一つは消せないようにする
+                        isDismissible: read.items.length != 1,
+                        onDismissed: (_) {
+                          read.removeItem(index);
+                        },
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              maxLength: 64,
+                              validator: emptyValidator,
+                              decoration: InputDecoration(labelText: '表示名'),
+                              initialValue: watch.items[index].name,
+                              onChanged: (v) {
+                                read.updateItemName(index, v);
+                              },
+                            ),
+                            DropdownButtonFormField<RecordType>(
+                              decoration: InputDecoration(labelText: 'レコードタイプ'),
+                              icon: Icon(Icons.arrow_downward),
+                              iconSize: 20,
+                              value: watch.items[index].type,
+                              onChanged: (v) {
+                                read.updateItemType(index, v);
+                              },
+                              items: RecordType.values
+                                  .where((e) => e != RecordType.None)
+                                  .map<DropdownMenuItem<RecordType>>(
+                                      (RecordType type) {
+                                return DropdownMenuItem<RecordType>(
+                                  value: type,
+                                  child: Text(type.name),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  if (watch.items.length != 10)
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          read.addItem();
+                        },
+                        icon: Icon(Icons.add, size: 18),
+                        label: Text('追加'),
                       ),
-                    );
-                  },
-                ),
-                if (watch.items.length != 10)
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        read.addItem();
-                      },
-                      icon: Icon(Icons.add, size: 18),
-                      label: Text('追加'),
-                    ),
-                  )
-              ],
+                    )
+                ],
+              ),
             ),
           ),
         ),
