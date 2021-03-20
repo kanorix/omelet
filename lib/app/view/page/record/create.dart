@@ -3,6 +3,7 @@ import 'package:omelet/app/config/export/model.dart';
 import 'package:omelet/app/config/export/notifier.dart';
 import 'package:omelet/app/view/component/appropriate_form_field.dart';
 import 'package:omelet/app/view/component/future_modal.dart';
+import 'package:omelet/common/func/validator.dart';
 
 import 'package:omelet/common/mixin/helper_mixin.dart';
 
@@ -49,9 +50,9 @@ class RecordCreateView extends StatelessWidget with HelperMixin {
         child: SingleChildScrollView(
           padding: EdgeInsets.all(10),
           child: Form(
-              key: read.formKey,
-              child: Card(
-                  child: Container(
+            key: read.formKey,
+            child: Card(
+              child: Container(
                 padding: EdgeInsets.all(8),
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
@@ -64,10 +65,13 @@ class RecordCreateView extends StatelessWidget with HelperMixin {
                       onChanged: (v) {
                         read.updateItem(index, v);
                       },
+                      validator: emptyValidator,
                     );
                   },
                 ),
-              ))),
+              ),
+            ),
+          ),
         ),
       ),
     );
